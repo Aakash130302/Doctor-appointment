@@ -16,15 +16,20 @@ const ApplyDoctor = () => {
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
+
+      const startMoment = values.timings[0];
+      const endMoment = values.timings[1];
+
+      // Format the times in "HH:mm" format
+      const startTime = startMoment.format("HH:mm");
+      const endTime = endMoment.format("HH:mm")
+
       const res = await axios.post(
         "/api/v1/user/apply-doctor",
         {
           ...values,
           userId: user._id,
-          timings: [
-            moment(values.timings[0]).format("HH:mm"),
-            moment(values.timings[1]).format("HH:mm"),
-          ],
+          timings: [startTime, endTime],
         },
         {
           headers: {

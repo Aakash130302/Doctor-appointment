@@ -18,15 +18,20 @@ const Profile = () => {
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
+
+      const startMoment = values.timings[0];
+      const endMoment = values.timings[1];
+
+      // Format the times in "HH:mm" format
+      const startTime = startMoment.format("HH:mm");
+      const endTime = endMoment.format("HH:mm");
+
       const res = await axios.post(
         "/api/v1/doctor/updateProfile",
         {
           ...values,
           userId: user._id,
-          timings: [
-            moment(values.timings[0]).format("HH:mm"),
-            moment(values.timings[1]).format("HH:mm"),
-          ],
+          timings: [startTime, endTime],
         },
         {
           headers: {
@@ -180,10 +185,15 @@ const Profile = () => {
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
-              <Form.Item label="Timings" name="timings" required>
-                <TimePicker.RangePicker format="HH:mm" />
-              </Form.Item>
-            </Col>
+            <Form.Item
+              label="Timings"
+              name="timings"
+              required
+              rules={[{ required: true }]}
+            >
+              <TimePicker.RangePicker format="HH:mm" />
+            </Form.Item>
+          </Col>
             <Col xs={24} md={24} lg={8}></Col>
             <Col xs={24} md={24} lg={8}>
               <button className="btn btn-primary form-btn" type="submit">
