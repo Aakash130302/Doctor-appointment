@@ -174,16 +174,20 @@ const getAllDoctorController = async (req, res) => {
 //book appointment
 const bookAppointmentController = async (req, res) => {
   try {
+    //console.log(req);
     req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     req.body.time = moment(req.body.time, "HH:mm").toISOString();
 
     req.body.status = "pending";
     const newAppointment = new appointmentModel(req.body);
     await newAppointment.save();
-    const user = await userModel.findOne({ _id: req.body.doctorInfo.userId });
+    const doctor = await doctorModel.findOne({ _id: req.body.doctorId });
+    const user = await userModel.findOne({ _id: doctor.userId });
+    //console.log(req);
+    console.log(user);
     user.notification.push({
       type: "New-appointment-request",
-      message: `A new appointment request from ${req.body.userInfo.name}`,
+      message: `A new appointment request from ${req.body.userInfo}`,
       onclickPath: "/user/appointments",
     });
     await user.save();

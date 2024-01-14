@@ -28,10 +28,10 @@ const Appointments = () => {
     },
     {
       title: "Doctor",
-      dataIndex: "name",
+      dataIndex: "DoctorInfo",
       render: (text, record) => (
         <span>
-          {record.doctorInfo.firstName} {record.doctorInfo.lastName}
+          {record.doctorInfo}
         </span>
       ),
     },

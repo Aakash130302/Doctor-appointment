@@ -48,9 +48,9 @@ const BookingPage = () => {
         {
           doctorId: params.doctorId,
           userId: user._id,
-          doctorInfo: doctors,
+          doctorInfo: `${doctors.firstName} ${doctors.lastName}`,
           date: date,
-          userInfo: user,
+          userInfo: user.name,
           time: time,
         },
         {
@@ -60,8 +60,10 @@ const BookingPage = () => {
         }
       );
       dispatch(hideLoading());
+      console.log(res);
       if (res.data.success) {
         message.success(res.data.message);
+        console.log(res.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());

@@ -41,12 +41,18 @@ const Layout = ({ children }) => {
     : user?.isDoctor
     ? doctorMenu
     : userMenu;
+
+  const role=user?.isAdmin
+  ? "Admin"
+  : user?.isDoctor
+  ? "Doctor"
+  : "User";
   return (
     <div className="main">
       <div className="layout">
         <div className="sidebar">
           <div className="logo">
-            <h6>DOC APP</h6>
+            <h6>{role}</h6>
             <hr />
           </div>
           <div className="menu">
@@ -69,14 +75,14 @@ const Layout = ({ children }) => {
         </div>
         <div className="content">
           <div className="header">
-            <div className="header-content" style={{ cursor: "pointer" }}>
-              <Badge
+            <div className="header-content">
+              <Badge 
                 count={user && user.notification.length}
                 onClick={() => {
                   navigate("/notification");
                 }}
               >
-                <i className="fa-solid fa-bell"></i>
+                <i className="fa-solid fa-bell" style={{ cursor: "pointer" }}></i>
               </Badge>
               <Link to="/profile">{user?.name}</Link>
             </div>

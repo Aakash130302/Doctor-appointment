@@ -37,7 +37,7 @@ const DoctorAppointments = () => {
       }
     } catch (error) {
       console.log(error);
-      message.error("something went wrong");
+      message.error("Unable to prform action");
     }
   };
 
@@ -48,10 +48,10 @@ const DoctorAppointments = () => {
     },
     {
       title: "Patient",
-      dataIndex: "name",
+      dataIndex: "userInfo",
       render: (text, record) => (
         <span>
-          {record.userInfo.name}
+          {record.userInfo}
         </span>
       ),
     },
@@ -82,10 +82,10 @@ const DoctorAppointments = () => {
           {record.status === "pending" && (
             <div className="d-flex">
               <button
-                className="btn btn-success ms-2"
+                className="btn btn-success mr-3"
                 onClick={() => handleStatus(record, "approved")}
               >
-                Approved
+                Approve
               </button>
               <button
                 className="btn btn-danger"
